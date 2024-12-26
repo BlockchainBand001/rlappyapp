@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   header: {
     fontSize: 24,
@@ -47,5 +49,8 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     marginRight: 10,
+  },
+  text: {
+    fontSize: 18,
   },
 });
