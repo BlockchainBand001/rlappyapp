@@ -1,15 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { 
   View, 
   Image, 
   StyleSheet, 
   Dimensions,
-  Pressable 
 } from 'react-native';
 import Animated, {
+  useAnimatedScrollHandler,
   useAnimatedStyle,
-  withSpring,
-  withTiming,
+  useSharedValue,
   interpolate,
 } from 'react-native-reanimated';
 import { ThemedText } from './ThemedText';
@@ -22,8 +21,14 @@ const ITEM_HEIGHT = 200;
 
 export function HeroCarousel({ data }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const scrollX = useRef(new Animated.Value(0)).current;
+  const scrollX = useSharedValue(0);
   const theme = useColorScheme() ?? 'light';
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollX.value = event.contentOffset.x;
+    },
+  });
 
   return (
     <View style={styles.container}>
@@ -34,10 +39,8 @@ export function HeroCarousel({ data }) {
         snapToInterval={ITEM_WIDTH + 16}
         decelerationRate="fast"
         contentContainerStyle={styles.scrollContent}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-          { useNativeDriver: true }
-        )}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
       >
         {data.map((item, index) => (
           <Animated.View
@@ -47,7 +50,7 @@ export function HeroCarousel({ data }) {
               {
                 transform: [{
                   scale: interpolate(
-                    scrollX,
+                    scrollX.value,
                     [(index - 1) * ITEM_WIDTH, index * ITEM_WIDTH, (index + 1) * ITEM_WIDTH],
                     [0.9, 1, 0.9]
                   ),
