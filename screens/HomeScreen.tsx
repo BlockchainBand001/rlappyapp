@@ -1,17 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Dimensions,
-  StatusBar,
-  Platform,
-} from 'react-native';
+import React from 'react';
+import { View, StatusBar, Platform } from 'react-native';
 import Animated, {
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
   interpolate,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -28,7 +20,6 @@ import { SearchBar } from '@/components/SearchBar';
 import { CategoryList } from '@/components/CategoryList';
 import { FeaturedSection } from '@/components/FeaturedSection';
 
-const { width } = Dimensions.get('window');
 const HEADER_HEIGHT = 60;
 
 export default function HomeScreen() {
@@ -70,10 +61,10 @@ export default function HomeScreen() {
   ];
 
   const categories = [
-    { id: '1', name: 'Electronics', icon: '📱' },
-    { id: '2', name: 'Fashion', icon: '👕' },
-    { id: '3', name: 'Home', icon: '🏠' },
-    { id: '4', name: 'Beauty', icon: '💄' },
+    { id: '1', name: 'Apple', icon: '🍏' },
+    { id: '2', name: 'Dell', icon: '💻' },
+    { id: '3', name: 'HP', icon: '🖥️' },
+    { id: '4', name: 'Lenovo', icon: '🖱️' },
   ];
 
   return (
@@ -100,15 +91,29 @@ export default function HomeScreen() {
           {/* Categories */}
           <View style={styles.section}>
             <ThemedText type="subtitle" style={styles.sectionTitle}>
-              Categories
+              Laptop Brands
             </ThemedText>
             <CategoryList categories={categories} />
           </View>
 
           {/* Featured Products */}
           <FeaturedSection 
-            title="Featured Products"
+            title="Featured Laptops"
             products={products.slice(0, 2)}
+            onAddToCart={addToCart}
+          />
+
+          {/* Renting Section */}
+          <FeaturedSection 
+            title="Rent a Laptop"
+            products={products.slice(2, 4)}
+            onAddToCart={addToCart}
+          />
+
+          {/* Virtual Machines Section */}
+          <FeaturedSection 
+            title="Use a Virtual Machine"
+            products={products.slice(4, 6)}
             onAddToCart={addToCart}
           />
 
