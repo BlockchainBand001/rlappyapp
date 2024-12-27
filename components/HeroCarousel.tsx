@@ -30,6 +30,8 @@ export function HeroCarousel({ data }) {
     },
   });
 
+
+  
   return (
     <View style={styles.container}>
       <Animated.ScrollView
