@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StatusBar, Platform } from 'react-native';
+import { View, StatusBar, Platform, StyleSheet } from 'react-native';
 import Animated, {
   useAnimatedScrollHandler,
   useAnimatedStyle,
